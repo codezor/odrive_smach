@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+    <rosparam command="load" file="$(find odrive_smach)/example/params.yaml" />
+    <node name="odrive_node" pkg="odrive_smach" type="odrive_node.py" output="screen" args = "odrive_node"/>
+    <node name="bucket_lift_node" pkg="odrive_smach" type="odrive_node.py" output="screen" args = "bucket_lift_node"/>
+    <node name="bucket_rotate_node" pkg="odrive_smach" type="odrive_node.py" output="screen" args = "bucket_rotate_node"/>
+    <node name="actuator_node_1" pkg="odrive_smach" type="odrive_node.py" output="screen" args = "actuator_node_1"/>
+    <node name="actuator_node_2" pkg="odrive_smach" type="odrive_node.py" output="screen" args = "actuator_node_2"/> 
+</launch>
