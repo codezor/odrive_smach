@@ -10,6 +10,22 @@ import tf2_ros
 #from move_base_msgs.msg import
 
 import random # Just to Infinite Move
+import Drive
+import Mining
+import Dump
+import BL_ON
+import BL_Lower
+import Dump_Move
+import Robot_Lower
+import Timeout
+import Dump_Stop
+import BL_Raise
+import Return
+import Rangefinder_Check
+import BL_Move
+import Dump_Rotate
+import Dump_Lower
+import BL_Reset
 
 class Starting(smach.State):
     def __init__(self):
@@ -65,7 +81,8 @@ class Starting(smach.State):
         client9.wait_for_server()
 
         return 'outcome_start'
-
+'''
+# line 69 to 91 copied to Drive.py
 class Driving(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_mine', 'outcome_dump', 'outcome_manual'],
@@ -88,7 +105,9 @@ class Driving(smach.State):
 
         else:
             return 'outcome_dump'
-
+'''
+'''
+# line 94 to 115 copied to Mining.py file
 class Mining(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_drive', 'outcome_manual', 'outcome_dig'],
@@ -103,13 +122,16 @@ class Mining(smach.State):
 
         return 'outcome_dig'
 
-        '''
+        ############################ tripple quote here
         if(userdata.x_in == 0):
-            return 'outcome_manual'
+           return 'outcome_manual'
         else:
             return 'outcome_drive'
-        '''
+        ############################## tripple quote end here
+'''
 
+'''
+# line 119 to 137 copied in Dump.py
 class Dump(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_drive', 'outcome_manual', 'outcome_dump'],
@@ -123,14 +145,16 @@ class Dump(smach.State):
         rospy.loginfo(userdata.x_in)
 
         return 'outcome_dump'
-        '''
+        ############################## tripple qyote here
         if(userdata.x_in == 0):
             return 'outcome_manual'
         else:
             return 'outcome_drive'
-        '''
+        ############################# tripple quote end here
+'''
 
-
+'''
+# line 142 to 159 copied to Manual_Control.py file
 class Manual_Control(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_mine', 'outcome_dump', 'outcome_drive'],
@@ -149,11 +173,12 @@ class Manual_Control(smach.State):
             return 'outcome_dump'
         else:
             return 'outcome_drive'
-
+'''
     # S S S S S S S S S S S S
     # START OF SM_SUB_DIGGING
     # S S S S S S S S S S S S
-
+'''
+# line 166 to 182 copied to Bl_ON.py file
 class BL_ON(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -171,7 +196,9 @@ class BL_ON(smach.State):
         print(client.get_result())
             
         return 'outcome_next'
-
+'''
+'''
+# line 186 to 202 copied to BL_Lower.py file
 class BL_Lower(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -189,7 +216,9 @@ class BL_Lower(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
-
+'''
+'''
+# line 209 to 225 copied to Dump_Move.py file
 class Dump_Move(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -207,7 +236,10 @@ class Dump_Move(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
+'''
 
+'''
+# line 230 to 246 copied to Robot_Lower.py file
 class Robot_Lower(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -225,18 +257,24 @@ class Robot_Lower(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
+'''
 
+'''
+# line 253 to 262 copied to Timeout.py file
 class Timeout(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
                                 input_keys = ['x_in'],
                                 output_keys = ['x_out'])
-             
+'             
     def execute(self, userdata):
         rospy.loginfo("Running --> Sub Digging: Timeout")
 
         return 'outcome_next'
+'''
 
+'''
+# line 268 to 284 copied to Dump_Move.py file
 class Dump_Stop(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -254,7 +292,10 @@ class Dump_Stop(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
+'''
 
+'''
+# line 290 to 306 copied to BL_Raise.py file
 class BL_Raise(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -272,7 +313,10 @@ class BL_Raise(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
+'''
 
+'''
+# line 312 to 328 copied to Return.py file
 class Return(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_return'],
@@ -290,7 +334,10 @@ class Return(smach.State):
     # S S S S S S S S S S S S
     # START OF SM_SUB_DUMPING
     # S S S S S S S S S S S S
+'''
 
+'''
+# line 334 to 342 copied to Rangefinder_Check.py file
 class Rangefinder_Check(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -300,7 +347,10 @@ class Rangefinder_Check(smach.State):
     def execute(self, userdata):
         rospy.loginfo("Running --> Sub Digging: Rangefinder_Check")
         return 'outcome_next'
+'''
 
+'''
+# line to 348 to 364 copied to BL_Move.py file
 class BL_Move(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -318,7 +368,10 @@ class BL_Move(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
+'''
 
+'''
+# line 371 to 387 copied to Dump_Rotate.py file
 class Dump_Rotate(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -336,7 +389,10 @@ class Dump_Rotate(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
+'''
 
+'''
+# line 393 to 409 copied to Dump_Lower.py file
 class Dump_Lower(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -354,7 +410,10 @@ class Dump_Lower(smach.State):
         print(client.get_result())
 
         return 'outcome_next'
+'''       
 
+'''
+# line 415 to 435 copied to BL_Reset.py file
 class BL_Reset(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -376,6 +435,8 @@ class BL_Reset(smach.State):
     # E E E E E E E E E E E E
     # END OF SM_SUB_DIGGING
     # E E E E E E E E E E E E
+'''
+
 
 # main
 def main():
@@ -395,7 +456,7 @@ def main():
 
 
         # Under here are the states that will continue to loop
-        smach.StateMachine.add('Drive', Driving(), 
+        smach.StateMachine.add('Drive', Drive.Driving(), 
                                 transitions = {'outcome_mine':'Mine',
                                                'outcome_dump':'Dump',
                                                'outcome_manual':'Manual'},
