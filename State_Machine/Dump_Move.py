@@ -13,7 +13,7 @@ class Dump_Move(smach.State):
     def execute(self, userdata):
         rospy.loginfo("Running --> Sub Digging: Dump_Move")
 
-                client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
+        client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
         client.send_goal(goal,feedback_cb=fdbk_cb)

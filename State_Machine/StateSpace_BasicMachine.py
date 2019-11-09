@@ -212,8 +212,14 @@ def main():
                                remapping = {'aVari':'aVariable',
                                             'aVari':'aVariable'})
 
+    sis = smach_ros.IntrospectionServer('state_machine', sm, '/SM_ROOT')
+    sis.start()
+    
     # Execute SMACH plan
     sm_main.execute()
+
+    rospy.spin()
+    sis.stop()
 
 
 if __name__ == '__main__':
