@@ -22,7 +22,7 @@ class BL_ON(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
             
@@ -40,7 +40,7 @@ class Robot_Lower(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -58,7 +58,7 @@ class Dump_Move(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -76,7 +76,7 @@ class BL_Lower(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -94,7 +94,7 @@ class Dump_Stop(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -123,7 +123,7 @@ class Whole_Raise(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -173,7 +173,7 @@ def digger_main():
                                    transitions = {'outcome_return':'end_digging'},
                                    remapping = {'x_in':'aVar',
                                                 'x_out':'aVar'})   
-
+	return sm_digger
 
 if __name__ == '__main__':
     digger_main()                                                  

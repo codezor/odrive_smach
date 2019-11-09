@@ -5,6 +5,10 @@ import smach_ros
 import tf2_ros
 import StateSpace_BasicMachine
 
+def fdbk_cb(msg):
+    print(msg)
+    return
+
 class Return(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_return'],

@@ -11,12 +11,21 @@ import tf2_ros
 
 import odrive_ros
 import actionlib
+import odrive_ros.msg
 
-import 2020_Digging_State_Machine
-import 2020_
+import Digging_State_Machine
+import Dumping_State_Machine
+import Drive
+import Mining
+import Dump
+import Manual_Control
 
 import random # Just to Infinite Move
 
+
+def fdbk_cb(msg):
+    print(msg)
+    return
 
 class Starting(smach.State):
     def __init__(self):
@@ -82,6 +91,9 @@ def main():
     sm_main = smach.StateMachine(outcomes = ['TisUseless'])
     sm_main.userdata.aVariable = 0
 
+    sm_dumper=Dumping_State_Machine.dumper_main()
+    sm_digger=Digging_State_Machine.digger_main()
+
     # Open the container
     with sm_main:
         # Add startup state to the Container
@@ -117,18 +129,18 @@ def main():
                                              'x_out':'aVariable'})    
 
         # Create Dig Sub Container
-        smach.StateMachine.add('Start_Digging', 2020_Digging_State_Machine.sm_digger,
+        smach.StateMachine.add('Start_Digging', sm_digger,
                                transitions={'end_digging':'Dump'},
                                remapping = {'aVar':'aVariable',
                                             'aVar':'aVariable'})
 
         # Create Dump Sub Container
-        smach.StateMachine.add('Start_Dumping', 2020_Dumping_State_Machine.sm_dumper,
+        smach.StateMachine.add('Start_Dumping', sm_dumper,
                                transitions={'end_dumping':'Drive'},
                                remapping = {'aVari':'aVariable',
                                             'aVari':'aVariable'})
 
-    sis = smach_ros.IntrospectionServer('state_machine', sm, '/SM_ROOT')
+    sis = smach_ros.IntrospectionServer('state_machine', sm_main, '/SM_ROOT')
     sis.start()
     
     # Execute SMACH plan

@@ -4,6 +4,7 @@ import smach
 import smach_ros
 import tf2_ros
 import StateSpace_BasicMachine
+import random
 
 class Manual_Control(smach.State):
     def __init__(self):

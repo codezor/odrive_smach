@@ -9,6 +9,16 @@ import odrive_ros
 import actionlib
 import Return
 
+class Rangefinder_Check(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes = ['outcome_next'],
+                                input_keys = ['x_in'],
+                                output_keys = ['x_out'])
+             
+    def execute(self, userdata):
+        rospy.loginfo("Running --> Sub Digging: Rangefinder_Check")
+        return 'outcome_next'
+
 class BL_Move(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
@@ -21,7 +31,7 @@ class BL_Move(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -39,7 +49,7 @@ class BL_Reset(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -57,7 +67,7 @@ class Dump_Lower(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -75,7 +85,7 @@ class Dump_Rotate(smach.State):
         client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
         client.wait_for_server()
         goal = odrive_ros.msg.SetpointGoal(setpoint=10)
-        client.send_goal(goal,feedback_cb=fdbk_cb)
+        client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
 
@@ -113,10 +123,11 @@ def dumper_main():
                                    remapping = {'x_in':'aVar',
                                                 'x_out':'aVar'})                                                      
         smach.StateMachine.add('Return', Return.Return(), 
-                                   transitions = {'outcome_return':'end_digging'},
+                                   transitions = {'outcome_return':'end_dumping'},
                                    remapping = {'x_in':'aVar',
                                                 'x_out':'aVar'})   
 
+	return sm_dumper
 
 if __name__ == '__main__':
     dumper_main()                                                  
