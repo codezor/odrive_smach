@@ -12,24 +12,11 @@ import tf2_ros
 import odrive_ros
 import actionlib
 
+import 2020_Digging_State_Machine
+import 2020_
+
 import random # Just to Infinite Move
-import Drive
-import Mining
-import Dump
-import Manual_Control
-import BL_ON
-import BL_Lower
-import Dump_Move
-import Robot_Lower
-import Timeout
-import Dump_Stop
-import BL_Raise
-import Return
-import Rangefinder_Check
-import BL_Move
-import Dump_Rotate
-import Dump_Lower
-import BL_Reset
+
 
 class Starting(smach.State):
     def __init__(self):
@@ -103,7 +90,6 @@ def main():
                                remapping = {'x_in':'aVariable',
                                             'x_out':'aVariable'})
 
-
         # Under here are the states that will continue to loop
         smach.StateMachine.add('Drive', Drive.Driving(), 
                                 transitions = {'outcome_mine':'Mine',
@@ -130,84 +116,14 @@ def main():
                                 remapping = {'x_in':'aVariable',
                                              'x_out':'aVariable'})    
 
-                # Create Sub Container
-        sm_sub_dig = smach.StateMachine(outcomes = ['end_digging'],
-                                input_keys = ['aVar'],
-                                output_keys = ['aVar'])
-
-        # Sub State where Loop will occur
-        with sm_sub_dig:
-            smach.StateMachine.add('BL_On', BL_ON.BL_ON(), 
-                                   transitions = {'outcome_next':'BL_Lower'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})
-            smach.StateMachine.add('BL_Lower', BL_Lower.BL_Lower(), 
-                                   transitions = {'outcome_next':'Dump_Move'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})
-            smach.StateMachine.add('Dump_Move', Dump_Move.Dump_Move(), 
-                                   transitions = {'outcome_next':'Robot_Lower'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})                                                       
-            smach.StateMachine.add('Robot_Lower', Robot_Lower.Robot_Lower(), 
-                                   transitions = {'outcome_next':'Timeout'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})    
-            smach.StateMachine.add('Timeout', Timeout.Timeout(), 
-                                   transitions = {'outcome_next':'Dump_Stop'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})
-            smach.StateMachine.add('Dump_Stop', Dump_Stop.Dump_Stop(), 
-                                   transitions = {'outcome_next':'BL_Raise'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})
-            smach.StateMachine.add('BL_Raise', BL_Raise.BL_Raise(), 
-                                   transitions = {'outcome_next':'Return'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})                                                       
-            smach.StateMachine.add('Return', Return.Return(), 
-                                   transitions = {'outcome_return':'end_digging'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})   
-        # Start up the Loop in a Sub State                                        
-        smach.StateMachine.add('Start_Digging', sm_sub_dig,
+        # Create Dig Sub Container
+        smach.StateMachine.add('Start_Digging', 2020_Digging_State_Machine.sm_digger,
                                transitions={'end_digging':'Dump'},
                                remapping = {'aVar':'aVariable',
                                             'aVar':'aVariable'})
 
-        # Create Sub Container
-        sm_sub_dump = smach.StateMachine(outcomes = ['end_dumping'],
-                                input_keys = ['aVar'],
-                                output_keys = ['aVar'])
-
-        # Sub State where Loop will occur
-        with sm_sub_dump:
-            smach.StateMachine.add('Rangerfinder_Check', Rangefinder_Check.Rangefinder_Check(), 
-                                   transitions = {'outcome_next':'BL_Move'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})
-            smach.StateMachine.add('BL_Move', BL_Move.BL_Move(), 
-                                   transitions = {'outcome_next':'Dump_Rotate'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})
-            smach.StateMachine.add('Dump_Rotate', Dump_Rotate.Dump_Rotate(), 
-                                   transitions = {'outcome_next':'Dump_Lower'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})                                                       
-            smach.StateMachine.add('Dump_Lower', Dump_Lower.Dump_Lower(), 
-                                   transitions = {'outcome_next':'BL_Reset'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})   
-            smach.StateMachine.add('BL_Reset', BL_Reset.BL_Reset(), 
-                                   transitions = {'outcome_next':'Return'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})   
-            smach.StateMachine.add('Return', Return.Return(), 
-                                   transitions = {'outcome_return':'end_dumping'},
-                                   remapping = {'x_in':'aVar',
-                                                'x_out':'aVar'})   
-        # Start up the Loop in a Sub State                                        
-        smach.StateMachine.add('Start_Dumping', sm_sub_dump,
+        # Create Dump Sub Container
+        smach.StateMachine.add('Start_Dumping', 2020_Dumping_State_Machine.sm_dumper,
                                transitions={'end_dumping':'Drive'},
                                remapping = {'aVari':'aVariable',
                                             'aVari':'aVariable'})
