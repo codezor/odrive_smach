@@ -4,6 +4,9 @@ import smach
 import smach_ros
 import tf2_ros
 import StateSpace_BasicMachine
+
+import random
+
 class Mining(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_drive', 'outcome_manual', 'outcome_dig'],
