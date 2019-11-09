@@ -4,6 +4,7 @@ import smach
 import smach_ros
 import tf2_ros
 import StateSpace_BasicMachine
+
 class Timeout(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes = ['outcome_next'],
