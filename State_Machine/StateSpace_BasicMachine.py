@@ -9,9 +9,9 @@ import tf2_ros
 #from std_msgs.msg import Bool
 #from move_base_msgs.msg import
 
-import odrive_ros
+import odrive_smach
 import actionlib
-import odrive_ros.msg
+import odrive_smach.msg
 
 import Digging_State_Machine
 import Dumping_State_Machine
@@ -39,34 +39,34 @@ class Starting(smach.State):
         rospy.loginfo(userdata.x_in)
 
         #First Server
-        client0 = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
+        client0 = actionlib.SimpleActionClient("/name0/position",odrive_smach.msg.SetpointAction)
         
         #Second Server
-        client1 = actionlib.SimpleActionClient("/name1/position",odrive_ros.msg.SetpointAction)
+        client1 = actionlib.SimpleActionClient("/name1/position",odrive_smach.msg.SetpointAction)
 
         #Third Server
-        client2 = actionlib.SimpleActionClient("/name2/position",odrive_ros.msg.SetpointAction)
+        client2 = actionlib.SimpleActionClient("/name2/position",odrive_smach.msg.SetpointAction)
 
         #Fourth Server
-        client3 = actionlib.SimpleActionClient("/name3/position",odrive_ros.msg.SetpointAction)
+        client3 = actionlib.SimpleActionClient("/name3/position",odrive_smach.msg.SetpointAction)
 
         #Fifth Server
-        client4 = actionlib.SimpleActionClient("/name4/position",odrive_ros.msg.SetpointAction)
+        client4 = actionlib.SimpleActionClient("/name4/position",odrive_smach.msg.SetpointAction)
         
         #Sixth Server
-        client5 = actionlib.SimpleActionClient("/name5/position",odrive_ros.msg.SetpointAction)
+        client5 = actionlib.SimpleActionClient("/name5/position",odrive_smach.msg.SetpointAction)
 
         #Seventh Server
-        client6 = actionlib.SimpleActionClient("/name6/position",odrive_ros.msg.SetpointAction)
+        client6 = actionlib.SimpleActionClient("/name6/position",odrive_smach.msg.SetpointAction)
 
         #Eighth Server
-        client7 = actionlib.SimpleActionClient("/name7/position",odrive_ros.msg.SetpointAction)
+        client7 = actionlib.SimpleActionClient("/name7/position",odrive_smach.msg.SetpointAction)
 
         #Ninth Server
-        client8 = actionlib.SimpleActionClient("/name8/position",odrive_ros.msg.SetpointAction)
+        client8 = actionlib.SimpleActionClient("/name8/position",odrive_smach.msg.SetpointAction)
 
         #Tenth Server
-        client9 = actionlib.SimpleActionClient("/name9/position",odrive_ros.msg.SetpointAction)
+        client9 = actionlib.SimpleActionClient("/name9/position",odrive_smach.msg.SetpointAction)
 
         #Let Servers Startup
         client0.wait_for_server()
