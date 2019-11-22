@@ -5,7 +5,7 @@ import smach
 import smach_ros
 import tf2_ros
 
-import odrive_ros
+import odrive_smach
 import actionlib
 import Return
 
@@ -28,9 +28,9 @@ class BL_Move(smach.State):
     def execute(self, userdata):
         rospy.loginfo("Running --> Sub Digging: BL_Move")
 
-        client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
+        client = actionlib.SimpleActionClient("/name0/position",odrive_smach.msg.SetpointAction)
         client.wait_for_server()
-        goal = odrive_ros.msg.SetpointGoal(setpoint=10)
+        goal = odrive_smach.msg.SetpointGoal(setpoint=10)
         client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
@@ -46,9 +46,9 @@ class BL_Reset(smach.State):
     def execute(self, userdata):
         rospy.loginfo("Running --> Sub Digging: BL_reset")
 
-        client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
+        client = actionlib.SimpleActionClient("/name0/position",odrive_smach.msg.SetpointAction)
         client.wait_for_server()
-        goal = odrive_ros.msg.SetpointGoal(setpoint=10)
+        goal = odrive_smach.msg.SetpointGoal(setpoint=10)
         client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
@@ -64,9 +64,9 @@ class Dump_Lower(smach.State):
     def execute(self, userdata):
         rospy.loginfo("Running --> Sub Digging: Dump_Lower")
 
-        client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
+        client = actionlib.SimpleActionClient("/name0/position",odrive_smach.msg.SetpointAction)
         client.wait_for_server()
-        goal = odrive_ros.msg.SetpointGoal(setpoint=10)
+        goal = odrive_smach.msg.SetpointGoal(setpoint=10)
         client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
@@ -82,9 +82,9 @@ class Dump_Rotate(smach.State):
     def execute(self, userdata):
         rospy.loginfo("Running --> Sub Digging: Dump_Rotate")
 
-        client = actionlib.SimpleActionClient("/name0/position",odrive_ros.msg.SetpointAction)
+        client = actionlib.SimpleActionClient("/name0/position",odrive_smach.msg.SetpointAction)
         client.wait_for_server()
-        goal = odrive_ros.msg.SetpointGoal(setpoint=10)
+        goal = odrive_smach.msg.SetpointGoal(setpoint=10)
         client.send_goal(goal,feedback_cb=Return.fdbk_cb)
         client.wait_for_result()
         print(client.get_result())
